@@ -21,7 +21,7 @@ int index_of_lru_frame(int *time, int n) {
 
 int main() {
     int no_frames;
-    printf("Enter the number of frams: ");
+    printf("Enter the number of frames: ");
     scanf("%d", &no_frames);
 
     // initialize frames and time

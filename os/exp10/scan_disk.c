@@ -7,10 +7,24 @@ void swap(int *a, int *b) {
     *b = temp;
 }
 
-void sort_requests(int *requests, int n) {
+// void sort_requests(int *requests, int n) {
+//     for (int i = 0; i < n; ++i)
+//         for (int j = i + 1; j < n; ++j)
+//             if (requests[i] > requests[j]) swap(&requests[i], &requests[j]);
+// }
+
+int max(int *requests, int n) {
+    int m = requests[0];
     for (int i = 0; i < n; ++i)
-        for (int j = i + 1; j < n; ++j)
-            if (requests[i] > requests[j]) swap(&requests[i], &requests[j]);
+        if (requests[i] > m) m = requests[i];
+    return m;
+}
+
+int min(int *requests, int n) {
+    int m = requests[0];
+    for (int i = 0; i < n; ++i)
+        if (requests[i] < m) m = requests[i];
+    return m;
 }
 
 int move_high(int *requests, int disk_size, int initial) {
@@ -56,10 +70,19 @@ int main() {
     printf("Enter head movement direction(0 -> low 1 -> high): ");
     scanf("%d", &direction);
 
-    sort_requests(requests, no_requests);
+    int low = min(requests, no_requests);
+    int high = max(requests, no_requests);
 
-    printf("Total head movement is %d\n",
-           (direction == 1)
-               ? move_high(requests, disk_size, initial_head_pos)
-               : move_low(requests, no_requests, initial_head_pos));
+    printf(
+        "Total head movement is %d\n",
+        (direction == 1)
+            ? (((disk_size - initial_head_pos) * 2) + (initial_head_pos - low))
+            : (((initial_head_pos) * 2) + high - initial_head_pos));
+
+    // sort_requests(requests, no_requests);
+
+    // printf("Total head movement is %d\n",
+    //        (direction == 1)
+    //            ? move_high(requests, disk_size, initial_head_pos)
+    //            : move_low(requests, no_requests, initial_head_pos));
 }

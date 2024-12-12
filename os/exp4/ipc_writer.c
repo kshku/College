@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 // Compile command
-// gcc ipc_writer.c
+// gcc ipc_writer.c -o writer
 
 int main() {
     int fd;

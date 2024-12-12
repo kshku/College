@@ -5,6 +5,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+// Compile command
+// gcc ipc_reader.c -o reader
+
 int main() {
     int fd;
     char *myfifo = "/tmp/myfifo";

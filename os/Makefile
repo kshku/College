@@ -5,10 +5,10 @@ EXECUTABLES := $(SOURCES:%.c=%)
 
 all: $(EXECUTABLES)
 
-$(EXECUTABLES):
+$(EXECUTABLES): $(SOURCES)
 	$(CC) $(CFLAGS) $@.c -o $@
 
 clean:
 	rm -f $(SOURCES:%.c=%)
 
-.PHONY: all run clean
+.PHONY: all clean
