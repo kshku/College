@@ -10,7 +10,7 @@ void first_fit_allocate(int *blocks, int *files, int *allocation, int nb,
     for (int i = 0; i < nb; ++i) block_allocated[i] = 0;
 
     for (int i = 0; i < nf; ++i) {      // loop through the files
-        int index = 0;                  // index of first large enough block
+        int index = -1;                 // index of first large enough block
         for (int j = 0; j < nb; ++j) {  // loop through the blocks
             if (block_allocated[j]) continue;
             // In first fit allocate to the first large enough memory block

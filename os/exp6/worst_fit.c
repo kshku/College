@@ -16,7 +16,7 @@ void worst_fit_allocate(int *blocks, int *files, int *allocation, int nb,
             if (blocks[max] < blocks[j]) max = j;
         }
         // Found the largest block index
-        if (blocks[max] >= files[i]) {
+        if (blocks[max] >= files[i] && !block_allocated[max]) {
             // mark the block as allocated
             block_allocated[max] = 1;
             // represent the allocation
