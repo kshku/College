@@ -38,21 +38,32 @@ int *gen_rand_arr(int n) {
 }
 
 int main(void) {
-    // int input_sizes = {5000, 10000, 15000, 20000};
-    int *arr;
     clock_t start, end;
-    double time_taken;
     printf("Input size\tTime taken\n");
     for (int input_size = 5000; input_size <= 20000; input_size += 5000) {
-        arr = gen_rand_arr(input_size);
+        int *arr = gen_rand_arr(input_size);
 
         start = clock();
         quick_sort(arr, 0, input_size - 1);
         end = clock();
 
-        time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+        double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
         printf("%10d\t%lf\n", input_size, time_taken);
 
         free(arr);
     }
+
+    // Testing whether it is sorting correctly
+    int arr[] = {10, 5, 3, 1, 4, 2, 6, 8, 7, 9};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Before sorting: ");
+    for (int i = 0; i < size; ++i) printf("%d ", arr[i]);
+    printf("\n");
+
+    quick_sort(arr, 0, size - 1);
+
+    printf("After sorting: ");
+    for (int i = 0; i < size; ++i) printf("%d ", arr[i]);
+    printf("\n");
 }

@@ -2,18 +2,32 @@
 #include <stdlib.h>
 #include <time.h>
 
-void swap(int *a, int *b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+void merge(int *a, int low, int mid, int high) {
+    int *ac = (int *)malloc((high + 1) * sizeof(int));
+    int i = low, j = mid + 1;
+    int idx = low;
+
+    while (i < mid + 1 && j < high + 1) {
+        if (a[i] < a[j])
+            ac[idx++] = a[i++];
+        else
+            ac[idx++] = a[j++];
+    }
+
+    while (i < mid + 1) ac[idx++] = a[i++];
+    while (j < high + 1) ac[idx++] = a[j++];
+
+    for (i = low; i < high + 1; ++i) a[i] = ac[i];
+
+    free(ac);
 }
 
-void selection_sort(int *arr, int n) {
-    for (int i = 0; i < n - 1; ++i) {
-        int min = i;
-        for (int j = i + 1; j < n; ++j)
-            if (arr[j] < arr[min]) min = j;
-        swap(&arr[min], &arr[i]);
+void merge_sort(int *a, int low, int high) {
+    if (low < high) {
+        int mid = low + (high - low) / 2;
+        merge_sort(a, low, mid);
+        merge_sort(a, mid + 1, high);
+        merge(a, low, mid, high);
     }
 }
 
@@ -32,7 +46,7 @@ int main(void) {
         int *arr = gen_rand_arr(input_size);
 
         start = clock();
-        selection_sort(arr, input_size);
+        merge_sort(arr, 0, input_size - 1);
         end = clock();
 
         double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
@@ -49,7 +63,7 @@ int main(void) {
     for (int i = 0; i < size; ++i) printf("%d ", arr[i]);
     printf("\n");
 
-    selection_sort(arr, size);
+    merge_sort(arr, 0, size - 1);
 
     printf("After sorting: ");
     for (int i = 0; i < size; ++i) printf("%d ", arr[i]);
