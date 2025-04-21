@@ -8,9 +8,9 @@ rules = [
 
 current_state = initial_state
 
-while not all(x in current_state for x in goal_state):
+while not all(state in current_state for state in goal_state):
     for rule in rules:
-        if all(x in current_state for x in rule['if']):
+        if all(state in current_state for state in rule['if']):
             current_state += rule['then']
 
 print(f"Final state: {current_state}")

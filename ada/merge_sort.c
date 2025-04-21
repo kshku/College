@@ -7,12 +7,8 @@ void merge(int *a, int low, int mid, int high) {
     int i = low, j = mid + 1;
     int idx = low;
 
-    while (i < mid + 1 && j < high + 1) {
-        if (a[i] < a[j])
-            ac[idx++] = a[i++];
-        else
-            ac[idx++] = a[j++];
-    }
+    while (i < mid + 1 && j < high + 1)
+        ac[idx++] = (a[i] < a[j]) ? a[i++] : a[j++];
 
     while (i < mid + 1) ac[idx++] = a[i++];
     while (j < high + 1) ac[idx++] = a[j++];
