@@ -6,16 +6,15 @@ class Board:
         self.state = [[0] * self.width for _ in range(self.height)]
         self.player = 0
 
-        self.state[5] = [1, 2, 1, 2, 1, 2]
-        self.state[4] = [2, 1, 2, 1, 2, 1]
-        self.state[3] = [1, 2, 1, 2, 1, 2]
+        # self.state[5] = [1, 2, 1, 2, 1, 2, 1]
+        # self.state[4] = [2, 1, 2, 1, 2, 1, 2]
+        # self.state[3] = [1, 2, 1, 2, 1, 2, 1]
 
     def print(self):
         for i in range(self.height):
             print(self.state[i])
 
     def drop(self, col):
-        print(col)
         if not (-1 < col < self.width):
             return None
 
@@ -32,79 +31,59 @@ class Board:
         self.player += 1
         return (self.height - 1, col)
 
-    def check(self, r, c):
-        # Check rows
-        # Will break if not win
-        for i in range(1, 4):
-            if (c + i < 0) or (c + i >= self.width) or (self.state[r][c + i] != self.state[r][c + i - 1]):
-                break
-        else:
-            # If didn't break player won
+    def check(self, row, col):
+        def check_direction(r, c, dr, dc):
+            if self.state[r][c] == 0:
+                return False
+            for i in range(1, 4):
+                nr, nc = r + (dr * i), c + (dc * i)
+                if not (0 <= nr < self.height and 0 <= nc < self.width):
+                    return False
+                elif self.state[nr][nc] != self.state[r][c]:
+                    return False
+
             return True
 
-        # Will break if not win
-        for i in range(1, 4):
-            if (c - i < 0) or (c - i >= self.width) or (self.state[r][c - i] != self.state[r][c - i + 1]):
-                break
-        else:
-            # If didn't break player won
+        def check_all_direction(r, c):
+            directions = [(0, 1), (1, 0), (1, 1), (0, -1), (-1, 0), (-1, -1), (-1, 1), (1, -1)]
+            for direction in directions:
+                if check_direction(r, c, *direction):
+                    return True
+
+            return False
+
+        if check_all_direction(row, col):
             return True
 
-        # Check cols
-        # Will break if not win
-        for i in range(1, 4):
-            if (r + i < 0) or (r + i >= self.height) or (self.state[r + i][c] != self.state[r + i - 1][c]):
-                break
-        else:
-            # If didn't break player won
-            return True
+        positions_and_dir = [(0, 1, 0, -1), (1, 0, -1, 0), (1, 1, -1, -1), (-1, -1, 1, 1), (1, -1, -1, 1), (-1, 1, 1, -1), (0, -1, 0, 1), (-1, 0, 1, 0)]
+        for params in positions_and_dir:
+            if check_direction(row + params[0], col + params[1], params[2], params[3]):
+                return True
 
-        # Will break if not win
-        for i in range(1, 4):
-            if (r - i < 0) or (r - i >= self.height) or (self.state[r - i][c] != self.state[r - i + 1][c]):
-                break
-        else:
-            # If didn't break player won
-            return True
+        return False
 
-        for i in range(1, 4):
-            if -1 < r + i < self.height and -1 < c + i < self.width:
-                if self.state[r + i][c + i] != self.state[r + i - 1][c + i - 1]:
-                    break
-            else:
-                break
-        else:
-            return True
-
-        for i in range(1, 4):
-            if -1 < r - i < self.height and -1 < c - i < self.width:
-                if self.state[r - i][c - i] != self.state[r - i + 1][c - i + 1]:
-                    break
-            else:
-                break
-        else:
-            return True
-
+    def check_draw(self):
+        for row in self.state:
+            if 0 in row:
+                return False
+        return True
 
     def play(self):
-        end = self.connected()
-        while end == 0:
+        end = False
+        while not end:
             self.print()
             cell = self.drop(int(input(f"Enter the column for player {self.player % 2 + 1}: ")) - 1)
             if cell:
-                end = self.check(*cell)
+                if self.check(*cell):
+                    end = True
+                    self.print()
+                    print(f"Player {(self.player - 1) % 2 + 1} Won!")
+                if self.check_draw():
+                    end = True
+                    self.print()
+                    print("Draw!")
             else:
                 print("Invalid column")
-
-        self.print()
-
-        if end == 1:
-            print("Player 1 WON!")
-        elif end == 2:
-            print("Player 2 WON!")
-        else:
-            print("Draw!")
-
 
 if __name__ == "__main__":
     b = Board()
