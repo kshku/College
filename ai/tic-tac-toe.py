@@ -20,6 +20,7 @@ class TicTacToe:
             if self.state[i] == self.state[i + 3] == self.state[i + 6]:
                 return self.state[i]
 
+        # Check diagonals
         if (self.state[0] == self.state[4] == self.state[8]) or (self.state[2] == self.state[4] == self.state[6]):
             return self.state[4]
 

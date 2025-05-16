@@ -22,8 +22,10 @@ class TSPSolver:
     def solve(self, start):
         min_cost = maxsize
 
+        # All other nodes except start node
         nodes = [i for i in range(self.v) if i != start]
 
+        # Go through each permuations and find minimum cost
         for path in permutations(nodes):
             min_cost = min(min_cost, self.calculate_cost(start, path))
 

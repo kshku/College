@@ -1,3 +1,4 @@
+# List having list of questions and answer for that list of questions
 qa = [(["Hi"], "Hello"),
       (["How are you?", "How do you do?"], "I am fine!"),
       (["Are you studying?", "Are you doing any job?"], "Yes, I am!"),
@@ -8,10 +9,8 @@ qa = [(["Hi"], "Hello"),
 print("Simple Question and Answering Program")
 print("-------------------------------------")
 print("You may ask one of these questions:")
-
 for q, a in qa:
     print(f"{q[0]}")
-
 print("Quit")
 
 while True:

@@ -1,17 +1,17 @@
 def AStarAlgo(start, goal, graph, hueristic):
     h = hueristic
+    # Store path and path cost along with node like ('A', ['A'], 14)
     open_list = [(start, [start], h[start])]
 
     while open_list:
         print(f"open_list: {open_list}")
 
-        node, path, nf = open_list[0]
-
         # Find node with least f(n)
+        node, path, nf = open_list[0]
+        # nf => new f value (path cost)
         for (v, p, f) in open_list:
             if f < nf:
                 node, path, nf = v, p, f
-
 
         # Goal check
         if node == goal:
@@ -22,7 +22,13 @@ def AStarAlgo(start, goal, graph, hueristic):
 
         print(f"Neighbours of {node}: {graph.get(node, [])}")
 
+        # Add neighbours to openlist
         for (v, w) in graph.get(node, []):
+            # v -> vertex (neighbour node)
+            # path + [v] = adding to path like ['A'] + ['B'] = ['A', 'B']
+            # (nf - h[node]) -> subtract hueristic from path cost to get the g(n)
+            # + w -> adding weight to g(n) calculated => g(v)
+            # + h[v] -> adding the heuristic of neighbour
             open_list.append((v, path + [v], (nf - h[node]) + w + h[v]))
 
         print()

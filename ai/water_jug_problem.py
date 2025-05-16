@@ -13,16 +13,18 @@ class WaterJugSolver:
             print("Target reached!")
             return True
 
-        j1_rem = self.j1_cap - j1
-        j2_rem = self.j2_cap - j2
+        # Calculate empty size in each jug
+        j1_empty = self.j1_cap - j1
+        j2_empty = self.j2_cap - j2
 
+        # Calcuate jug capacity after each operation
         operations = (
             (self.j1_cap, j2), # Fill j1
             (j1, self.j2_cap), # Fill j2
             (0, j2), # Empty j1
             (j1, 0), # Empty j2
-            (j1 - min(j1, j2_rem), j2 + min(j1, j2_rem)), # Pour j1 to j2
-            (j1 + min(j2, j1_rem), j2 - min(j2, j1_rem)), # Pour j2 to j1
+            (j1 - min(j1, j2_empty), j2 + min(j1, j2_empty)), # Pour j1 to j2
+            (j1 + min(j2, j1_empty), j2 - min(j2, j1_empty)), # Pour j2 to j1
         )
 
         for op in operations:
