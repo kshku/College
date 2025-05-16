@@ -1,4 +1,5 @@
-# Not completed
+import os
+
 class Board:
     def __init__(self):
         self.width = 7
@@ -9,6 +10,14 @@ class Board:
         # self.state[5] = [1, 2, 1, 2, 1, 2, 1]
         # self.state[4] = [2, 1, 2, 1, 2, 1, 2]
         # self.state[3] = [1, 2, 1, 2, 1, 2, 1]
+        # self.state = [
+        #     [1, 1, 2, 2, 1, 0, 2],
+        #     [2, 2, 1, 1, 2, 2, 1],
+        #     [1, 1, 2, 2, 1, 1, 2],
+        #     [2, 2, 1, 1, 2, 2, 1],
+        #     [1, 1, 2, 2, 1, 1, 2],
+        #     [2, 2, 1, 1, 2, 2, 1],
+        # ]
 
     def print(self):
         for i in range(self.height):
@@ -32,35 +41,27 @@ class Board:
         return (self.height - 1, col)
 
     def check(self, row, col):
-        def check_direction(r, c, dr, dc):
-            if self.state[r][c] == 0:
-                return False
-            for i in range(1, 4):
-                nr, nc = r + (dr * i), c + (dc * i)
-                if not (0 <= nr < self.height and 0 <= nc < self.width):
-                    return False
-                elif self.state[nr][nc] != self.state[r][c]:
-                    return False
-
-            return True
-
-        def check_all_direction(r, c):
-            directions = [(0, 1), (1, 0), (1, 1), (0, -1), (-1, 0), (-1, -1), (-1, 1), (1, -1)]
-            for direction in directions:
-                if check_direction(r, c, *direction):
-                    return True
-
+        if self.state[row][col] == 0:
             return False
 
-        if check_all_direction(row, col):
-            return True
+        def count_direction(dr, dc):
+            count = 1
+            for step in [1, -1]:
+                r, c = row + dr * step, col + dc * step
+                while 0 <= r < self.height and 0 <= c < self.width and self.state[r][c] == self.state[row][col]:
+                    count += 1
+                    r += dr * step
+                    c += dc * step
+            return count
 
-        positions_and_dir = [(0, 1, 0, -1), (1, 0, -1, 0), (1, 1, -1, -1), (-1, -1, 1, 1), (1, -1, -1, 1), (-1, 1, 1, -1), (0, -1, 0, 1), (-1, 0, 1, 0)]
-        for params in positions_and_dir:
-            if check_direction(row + params[0], col + params[1], params[2], params[3]):
+        # directions: horizontal, vertical, diagonal1, diagonal2
+        directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+        for dr, dc in directions:
+            if count_direction(dr, dc) >= 4:
                 return True
 
         return False
+
 
     def check_draw(self):
         for row in self.state:
@@ -69,21 +70,28 @@ class Board:
         return True
 
     def play(self):
-        end = False
-        while not end:
+        winner = 0
+        invalid = False
+        while winner == 0:
+            os.system('clear')
+            if invalid:
+                invalid = False
+                print("Invalid input, enter again")
             self.print()
             cell = self.drop(int(input(f"Enter the column for player {self.player % 2 + 1}: ")) - 1)
-            if cell:
-                if self.check(*cell):
-                    end = True
-                    self.print()
-                    print(f"Player {(self.player - 1) % 2 + 1} Won!")
-                if self.check_draw():
-                    end = True
-                    self.print()
-                    print("Draw!")
-            else:
-                print("Invalid column")
+            if not cell:
+                invalid = True
+            elif self.check(*cell):
+                winner = (self.player - 1) % 2 + 1
+            elif self.check_draw():
+                winner = 3
+
+        self.print()
+        if winner == 3:
+            print("Draw!")
+        else:
+            print(f"Player {winner} Won!")
+
 
 if __name__ == "__main__":
     b = Board()
