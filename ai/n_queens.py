@@ -7,12 +7,10 @@ class NQueensSolver:
         # Since we are placing the queens row by row, we just need to
         # look up to this row. Don't have to check entire board
 
-        # Check the current row
+        # Check for the current row
         for r in range(0, row): # Check upto this row
             if self.board[r][col]:
                 return False
-
-        # We also don't have to check the row
 
         # Check diagonally (Principal diagonal or main diagonal or major diagonal '\')
         for i, j in zip(range(row, -1, -1), range(col, -1, -1)):

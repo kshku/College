@@ -8,6 +8,7 @@ class TicTacToe:
         self.symbols = ['O', 'X']
 
     def __str__(self):
+        # Format string for showing the board state
         return f" {self.state[0]} | {self.state[1]} | {self.state[2]}\n___|___|___\n {self.state[3]} | {self.state[4]} | {self.state[5]}\n___|___|___\n {self.state[6]} | {self.state[7]} | {self.state[8]}\n   |   |"
 
     def checkState(self):
@@ -39,7 +40,7 @@ class TicTacToe:
 if __name__ == '__main__':
     print("Loading the game...")
     game = TicTacToe()
-    time.sleep(1)
+    time.sleep(1) # really, This is really big game, takes a little time to load 😂
     running = True
     result = ' '
 

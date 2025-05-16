@@ -36,3 +36,5 @@ if __name__ == '__main__':
     wjs = WaterJugSolver(4, 3, 2)
     if not wjs.solve(0, 0):
         print("Cannot solve!")
+    else:
+        print("Solved!")

@@ -4,6 +4,7 @@ def AStarAlgo(start, goal, graph, hueristic):
 
     while open_list:
         print(f"open_list: {open_list}")
+
         node, path, nf = open_list[0]
 
         # Find node with least f(n)
@@ -41,6 +42,8 @@ if __name__ == '__main__':
     hueristic = {'A': 14, 'B': 12, 'C': 11, 'D': 6, 'E': 4, 'F': 11, 'Z': 0}
 
     path, cost = AStarAlgo('A', 'Z', graph, hueristic)
+
+    print()
 
     if not path:
         print("No solution")

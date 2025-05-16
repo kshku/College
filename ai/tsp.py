@@ -14,7 +14,7 @@ class TSPSolver:
             cost += self.graph[current_node][node]
             current_node = node
 
-        # Going back to the starting node
+        # Cost of going back to the starting node
         cost += self.graph[current_node][start]
 
         return cost
