@@ -12,12 +12,10 @@ void print_topological_ordering(int a[10][10], int n) {
     // graph)
 
     // Let's calculate in-degree (number of 1's in column)
-    int in[10];
+    int in[10] = {0};
 
-    for (int col = 0; col < n; ++col) {
-        in[col] = 0;
+    for (int col = 0; col < n; ++col)
         for (int row = 0; row < n; ++row) in[col] += a[row][col];
-    }
 
     // If in-degree is 0, print that node and delete it.
     // Deleting means decrementing the in-degree of nodes that can be visited by
@@ -31,6 +29,8 @@ void print_topological_ordering(int a[10][10], int n) {
     for (int i = 0; count != n; i = (i + 1) % n) {
         if (in[i] == 0) {
             printf("%d ", i + 1);
+            // decrement in-degree so that it is not 0 next time
+            --in[i];
             ++count;
             // Decrement the in-degree
             for (int j = 0; j < n; ++j) {
