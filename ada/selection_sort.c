@@ -10,9 +10,12 @@ void swap(int *a, int *b) {
 
 void selection_sort(int *arr, int n) {
     for (int i = 0; i < n - 1; ++i) {
+        // select the smallest element
         int min = i;
         for (int j = i + 1; j < n; ++j)
             if (arr[j] < arr[min]) min = j;
+
+        // Swap the smallest element to here
         swap(&arr[min], &arr[i]);
     }
 }

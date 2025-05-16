@@ -9,15 +9,27 @@ void swap(int *a, int *b) {
 }
 
 int partition(int *arr, int low, int high) {
-    int i = low - 1;
+    // Lomuto partitioning
+
+    // Using last element as the pivot element
+
+    // Here when we find element <= pivot, we move it to the left side of the
+    // array.
+    // i is the next index where we are supposed to place element <= pivot.
+    int i = low;
+
     for (int j = low; j < high; ++j) {
         if (arr[j] <= arr[high]) {
-            ++i;
             swap(&arr[i], &arr[j]);
+            ++i;
         }
     }
-    ++i;
+
+    // i is the next index where we are supposed to place the element <=
+    // pivot. Move the pivot element here.
     swap(&arr[i], &arr[high]);
+
+    // Now all the elements left side i is <= pivot and right side are > pivot
     return i;
 }
 

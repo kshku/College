@@ -3,18 +3,25 @@
 #include <time.h>
 
 void merge(int *a, int low, int mid, int high) {
+    // Temporary array
     int *ac = (int *)malloc((high + 1) * sizeof(int));
     int i = low, j = mid + 1;
     int idx = low;
 
+    // Until we reach end of any array copy minimum element
     while (i < mid + 1 && j < high + 1)
         ac[idx++] = (a[i] < a[j]) ? a[i++] : a[j++];
+    // One of the two halves or both halves reached end
 
+    // If we have elements in the first half copy them
     while (i < mid + 1) ac[idx++] = a[i++];
+    // If we have elements in the second half copy them
     while (j < high + 1) ac[idx++] = a[j++];
 
+    // Copy the sorted elements from the temporary array
     for (i = low; i < high + 1; ++i) a[i] = ac[i];
 
+    // Destroy the temporary array
     free(ac);
 }
 
