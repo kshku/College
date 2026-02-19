@@ -1,0 +1,10 @@
+gensim
+jupyter
+numpy
+nltk
+spacy
+textblob
+scikit-learn
+transformers
+torch
+langdetect
