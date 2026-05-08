@@ -9,3 +9,5 @@ transformers
 torch
 langdetect
 plotly
+matplotlib
+wikipedia-api
