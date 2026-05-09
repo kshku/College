@@ -1,0 +1,9 @@
+{
+    "MIT": {
+        "founder": "Someone",
+        "founded": "Someday",
+        "branches": ["A", "B", "C"],
+        "number_of_employees": 50,
+        "summary": "A long summary"
+    }
+}
